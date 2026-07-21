@@ -1,0 +1,33 @@
+body{
+    margin:0;
+    background:#f5f5f5;
+    font-family:Arial;
+}
+
+.container{
+    max-width:700px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+    text-align:center;
+}
+
+input{
+    margin:20px 0;
+}
+
+#galeria{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+}
+
+#galeria img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+}
