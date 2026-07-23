@@ -1,26 +1,25 @@
 const fotos = document.getElementById("fotos");
-const galeria = document.getElementById("galeria");
+const fotoPrincipal = document.getElementById("fotoPrincipal");
+const novo = document.getElementById("novo");
 
-fotos.addEventListener("change", function(){
+fotos.addEventListener("change", () => {
 
-    galeria.innerHTML = "";
+    if(fotos.files.length === 0) return;
 
-    for(let foto of fotos.files){
+    const leitor = new FileReader();
 
-        const leitor = new FileReader();
+    leitor.onload = (e) => {
 
-        leitor.onload = function(e){
+        fotoPrincipal.src = e.target.result;
 
-            const img = document.createElement("img");
+        novo.style.display = "block";
 
-            img.src = e.target.result;
-
-            galeria.appendChild(img);
-
-        }
-
-        leitor.readAsDataURL(foto);
+        setTimeout(()=>{
+            novo.style.display = "none";
+        },3000);
 
     }
+
+    leitor.readAsDataURL(fotos.files[0]);
 
 });

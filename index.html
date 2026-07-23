@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Henrique Fotografias</title>
+
+<title>PixWall</title>
 
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="topo">
+    <h2>PixWall</h2>
+</div>
 
-    <h1>Henrique Fotografias</h1>
+<div class="tela">
 
-    <p>Compartilhe suas fotos do evento.</p>
+    <div class="lateral esquerda">
+        <div id="miniaturas-esquerda"></div>
+    </div>
 
-    <input type="file" id="fotos" multiple accept="image/*">
+    <div class="centro">
 
-    <div id="galeria"></div>
+        <div class="novo" id="novo">
+            🔥 NOVO!
+        </div>
+
+        <img id="fotoPrincipal" src="" alt="">
+
+        <div class="painelQR">
+
+            <h3>ESCANEIE PARA ENVIAR SUAS FOTOS</h3>
+
+            <img id="qrcode" src="qr.png" alt="QR Code">
+
+            <input type="file" id="fotos" multiple accept="image/*">
+
+        </div>
+
+    </div>
+
+    <div class="lateral direita">
+        <div id="miniaturas-direita"></div>
+    </div>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>

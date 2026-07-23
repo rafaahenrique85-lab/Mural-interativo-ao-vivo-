@@ -1,33 +1,78 @@
-body{
+*{
     margin:0;
-    background:#f5f5f5;
-    font-family:Arial;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.container{
-    max-width:700px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,.15);
+body{
+    background:#000;
+    color:#fff;
+    overflow:hidden;
+}
+
+.topo{
+    height:70px;
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    border-bottom:1px solid #222;
+}
+
+.topo h2{
+    font-size:32px;
+}
+
+.tela{
+    display:grid;
+    grid-template-columns:180px 1fr 180px;
+    height:calc(100vh - 70px);
+}
+
+.lateral{
+    background:#111;
+    padding:10px;
+    overflow-y:auto;
+}
+
+.centro{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+}
+
+#fotoPrincipal{
+    width:90%;
+    height:90%;
+    object-fit:contain;
+    border-radius:12px;
+}
+
+.painelQR{
+    position:absolute;
+    left:20px;
+    bottom:20px;
+    background:rgba(0,0,0,.75);
+    padding:15px;
+    border-radius:12px;
     text-align:center;
 }
 
-input{
-    margin:20px 0;
+#qrcode{
+    width:170px;
+    margin:10px 0;
 }
 
-#galeria{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-}
-
-#galeria img{
-    width:120px;
-    height:120px;
-    object-fit:cover;
-    border-radius:10px;
+.novo{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#ff3b30;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:30px;
+    font-weight:bold;
+    display:none;
 }
