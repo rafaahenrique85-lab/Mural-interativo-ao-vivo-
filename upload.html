@@ -1,60 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Enviar Fotos • PixWall</title>
+    <title>PixWall - Upload</title>
 
     <link rel="stylesheet" href="upload.css">
-
 </head>
 
 <body>
 
 <div class="container">
 
-    <div class="logo">
+    <h2>Enviar foto para o PixWall</h2>
 
-        <img src="assets/icons/logo.png" alt="PixWall">
+    <p>Escolha uma foto do seu celular ou computador.</p>
 
-        <h1>PIXWALL</h1>
+    <form id="formUpload">
 
-    </div>
+        <input type="file" id="foto" name="foto" required>
 
-    <h2>Compartilhe seus melhores momentos</h2>
+        <button type="submit">
+            Enviar Foto
+        </button>
 
-    <p>
-        Escolha suas fotos e envie para aparecerem
-        no telão em instantes.
-    </p>
+    </form>
 
-    <label for="fotos" class="botaoSelecionar">
-        📷 Selecionar Fotos
-    </label>
-
-    <input
-        type="file"
-        id="fotos"
-        multiple
-        accept="image/*">
-
-    <button id="enviar">
-        Enviar Fotos
-    </button>
-
-    <div id="mensagem" class="mensagem">
-
-        ✅ Suas fotos foram enviadas com sucesso!
-
-    </div>
+    <div class="mensagem" id="mensagem"></div>
 
 </div>
 
 <script src="upload.js"></script>
 
 </body>
-
 </html>

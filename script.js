@@ -1,72 +1,83 @@
 const fotoPrincipal = document.getElementById("fotoPrincipal");
+const miniaturasEsquerda = document.getElementById("miniaturasEsquerda");
+const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
 
-let filaFotos = [];
-let exibindo = false;
+let ultimaFoto = "";
 
-function adicionarFoto(src) {
+async function carregarFotos() {
 
-    filaFotos.push(src);
+    try {
 
-    if (!exibindo) {
-        mostrarProximaFoto();
+        const resposta = await fetch("/fotos");
+        const fotos = await resposta.json();
+
+        if (!fotos.length) return;
+
+        fotos.sort();
+
+        const fotoAtual = "/uploads/" + fotos[fotos.length - 1];
+
+        if (fotoAtual !== ultimaFoto) {
+
+            ultimaFoto = fotoAtual;
+
+            fotoPrincipal.style.opacity = "0";
+
+            setTimeout(() => {
+
+                fotoPrincipal.src = fotoAtual;
+                fotoPrincipal.style.opacity = "1";
+
+                novo.style.display = "block";
+
+                setTimeout(() => {
+
+                    novo.style.display = "none";
+
+                }, 3000);
+
+            }, 300);
+
+        }
+
+        miniaturasEsquerda.innerHTML = "";
+        miniaturasDireita.innerHTML = "";
+
+        const lista = [...fotos].reverse();
+
+        lista.forEach((foto, indice) => {
+
+            const img = document.createElement("img");
+
+            img.src = "/uploads/" + foto;
+
+            img.onclick = () => {
+
+                fotoPrincipal.src = img.src;
+
+            };
+
+            if (indice % 2 === 0) {
+
+                miniaturasEsquerda.appendChild(img);
+
+            } else {
+
+                miniaturasDireita.appendChild(img);
+
+            }
+
+        });
+
+    } catch (erro) {
+
+        console.log(erro);
+
     }
 
 }
 
-function mostrarProximaFoto() {
+carregarFotos();
 
-    if (filaFotos.length === 0) {
-
-        exibindo = false;
-        return;
-
-    }
-
-    exibindo = true;
-
-    const foto = filaFotos.shift();
-
-    fotoPrincipal.style.opacity = "0";
-
-    setTimeout(() => {
-
-        fotoPrincipal.src = foto;
-
-        fotoPrincipal.style.opacity = "1";
-
-        novo.style.display = "block";
-
-        setTimeout(() => {
-
-            novo.style.display = "none";
-
-        }, 3000);
-
-    }, 300);
-
-    setTimeout(() => {
-
-        mostrarProximaFoto();
-
-    }, 8000);
-
-}
-
-/*
-==================================================
-
-FUNÇÃO TEMPORÁRIA PARA TESTES
-
-Enquanto ainda não conectamos ao Google Drive,
-você pode abrir o Console (F12) e executar:
-
-adicionarFoto("caminho_da_imagem.jpg");
-
-Depois essa função será utilizada automaticamente
-pelas fotos enviadas pelos convidados.
-
-==================================================
-*/
-
-window.adicionarFoto = adicionarFoto;
+setInterval(carregarFotos, 2000);

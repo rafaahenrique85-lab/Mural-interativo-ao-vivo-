@@ -1,107 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700;800&display=swap');
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family:'League Spartan',sans-serif;
-    background:linear-gradient(180deg,#111,#1b1b1b);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    color:#fff;
+body {
+    font-family: 'League Spartan', sans-serif;
+    background: linear-gradient(180deg, #111, #1b1b1b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
 }
 
-.container{
-    width:90%;
-    max-width:420px;
-    background:#1f1f1f;
-    padding:35px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 20px 50px rgba(0,0,0,.4);
+.container {
+    width: 90%;
+    max-width: 420px;
+    background: #1f1f1f;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
 }
 
-.logo{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    margin-bottom:25px;
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
-.logo img{
-    width:42px;
+.logo img {
+    width: 42px;
 }
 
-.logo h1{
-    font-size:40px;
-    font-weight:900;
+.logo h1 {
+    font-size: 40px;
+    font-weight: 900;
 }
 
-h2{
-    margin-bottom:15px;
+h2 {
+    margin-bottom: 15px;
 }
 
-p{
-    color:#bcbcbc;
-    margin-bottom:30px;
-    line-height:24px;
+p {
+    color: #bcbcbc;
+    margin-bottom: 30px;
+    line-height: 24px;
 }
 
-.botaoSelecionar{
-
-    display:block;
-    background:#2f80ed;
-    padding:16px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:bold;
-    margin-bottom:20px;
-
+.botaoSelecionar {
+    display: block;
+    width: 100%;
+    background: #2f80ed;
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.botaoSelecionar:hover{
-
-    background:#1d6fdc;
-
+.botaoSelecionar:hover {
+    background: #1d6fdc;
 }
 
-input[type=file]{
-
-    display:none;
-
+input[type="file"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    color: white;
 }
 
-button{
-
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:12px;
-    background:#27ae60;
-    color:#fff;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: #27ae60;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-button:hover{
-
-    background:#219653;
-
+button:hover {
+    background: #219653;
 }
 
-.mensagem{
-
-    display:none;
-    margin-top:20px;
-    color:#5cff87;
-    font-weight:bold;
-
+.mensagem {
+    display: none;
+    margin-top: 20px;
+    color: #5cff87;
+    font-weight: bold;
 }
