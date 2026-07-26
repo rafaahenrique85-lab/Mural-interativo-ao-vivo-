@@ -2,51 +2,82 @@
 <html lang="pt-BR">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PixWall</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <title>PixWall</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div class="topo">
-    <h2>PixWall</h2>
-</div>
+<header class="topo">
 
-<div class="tela">
+    <div class="logo">
 
-    <div class="lateral esquerda">
+        <img src="assets/icons/logo.png" alt="PixWall">
+
+        <h1>PIXWALL</h1>
+
+    </div>
+
+</header>
+
+
+<main class="tela">
+
+    <aside class="lateral esquerda">
+
         <div id="miniaturas-esquerda"></div>
-    </div>
 
-    <div class="centro">
+    </aside>
 
-        <div class="novo" id="novo">
-            🔥 NOVO!
-        </div>
 
-        <img id="fotoPrincipal" src="" alt="">
+    <section class="centro">
 
-        <div class="painelQR">
+        <div id="novo" class="novo">
 
-            <h3>ESCANEIE PARA ENVIAR SUAS FOTOS</h3>
-
-            <img id="qrcode" src="qr.png" alt="QR Code">
-
-            <input type="file" id="fotos" multiple accept="image/*">
+            🔥 NOVA
 
         </div>
 
-    </div>
+        <img id="fotoPrincipal" src="" alt="Foto do Evento">
 
-    <div class="lateral direita">
+    </section>
+
+
+    <aside class="lateral direita">
+
         <div id="miniaturas-direita"></div>
-    </div>
 
-</div>
+    </aside>
+
+
+    <aside class="painelQR">
+
+        <h2>ESCANEIE O QR CODE</h2>
+
+        <p>
+            Envie sua foto e ela aparecerá
+            no mural em instantes.
+        </p>
+
+        <img id="qrcode" src="qr.png" alt="QR Code">
+
+    </aside>
+
+</main>
+
+
+<footer class="rodape">
+
+    PixWall Studio • Desenvolvido por Henrique Fotografias
+
+</footer>
+
 
 <script src="script.js"></script>
 
