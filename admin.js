@@ -106,12 +106,18 @@ fetch("/pendentes")
 
             listaPendentes.innerHTML += `
                 <div class="foto-pendente">
+                
+<img
+    src="/pendentes/${foto}"
+    alt="Foto pendente"
+    class="miniatura-pendente"
+>
 
-                    <p>📷 ${foto}</p>
+<p>${foto}</p>
 
-                    <button onclick="aprovarFoto('${foto}')">✅ Aprovar</button>
+<button onclick="aprovarFoto('${foto}')">✅ Aprovar</button>
 
-                    <button onclick="rejeitarFoto('${foto}')">❌ Rejeitar</button>
+<button onclick="rejeitarFoto('${foto}')">❌ Rejeitar</button>
 
                 </div>
             `;

@@ -20,6 +20,7 @@ const upload = multer({
 
 app.use(express.static(path.join(__dirname, "..")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/pendentes", express.static(path.join(__dirname, "pendentes")));
 app.use(express.json());
 
 app.post("/evento", (req, res) => {
