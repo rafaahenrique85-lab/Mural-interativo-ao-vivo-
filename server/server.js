@@ -132,6 +132,28 @@ app.post("/aprovar", (req, res) => {
 
 });
 
+app.post("/rejeitar", (req, res) => {
+
+    const { foto } = req.body;
+
+    const arquivo = path.join(__dirname, "pendentes", foto);
+
+    fs.unlink(arquivo, (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                sucesso: false
+            });
+        }
+
+        res.json({
+            sucesso: true
+        });
+
+    });
+
+});
+
 app.listen(PORT, () => {
     console.log("Servidor rodando em http://localhost:3000");
 });

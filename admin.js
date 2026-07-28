@@ -111,7 +111,7 @@ fetch("/pendentes")
 
                     <button onclick="aprovarFoto('${foto}')">✅ Aprovar</button>
 
-<button>❌ Rejeitar</button>
+                    <button onclick="rejeitarFoto('${foto}')">❌ Rejeitar</button>
 
                 </div>
             `;
@@ -119,9 +119,26 @@ fetch("/pendentes")
         });
 
     });
-    function aprovarFoto(foto) {
+
+function aprovarFoto(foto) {
 
     fetch("/aprovar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ foto })
+    })
+    .then(res => res.json())
+    .then(() => {
+        location.reload();
+    });
+
+}
+
+function rejeitarFoto(foto) {
+
+    fetch("/rejeitar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
