@@ -3,72 +3,71 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PixWall - Mural</title>
+    <title>PixWall</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header class="topo">
+    <header>
 
-    <div class="logo">
+        <div class="logo">
 
-        <img src="assets/icons/logo.png" alt="PixWall">
+            <img src="assets/icons/logo.png" id="logoPixwall" alt="PixWall">
 
-        <h1>PIXWALL</h1>
+            <h1>PIXWALL</h1>
 
-    </div>
-
-</header>
-
-<main class="layout">
-
-    <aside class="lateral">
-
-        <div id="miniaturas-esquerda"></div>
-
-    </aside>
-
-    <section class="principal">
-
-        <img id="fotoPrincipal" src="" alt="Foto">
-
-        <div id="novo" class="novo">
-            🔥 NOVA FOTO
         </div>
 
-    </section>
+    </header>
 
-    <aside class="lateral">
+    <main class="container">
 
-        <div id="miniaturas-direita"></div>
+        <!-- QR Code -->
+        <aside class="colunaEsquerda">
 
-    </aside>
+            <div class="qrArea">
 
-    <aside class="qr">
+                <img src="qr.png" id="qrcode" alt="QR Code">
 
-        <h2>ESCANEIE</h2>
+                <p>ESCANEIE PARA ENVIAR SUA FOTO</p>
 
-        <p>Envie sua foto para aparecer no mural.</p>
+            </div>
 
-        <img src="qr.png" id="qrcode">
+        </aside>
 
-    </aside>
+        <!-- Foto principal -->
+        <section class="mural">
 
-</main>
+            <img id="fotoPrincipal" src="" alt="Foto Principal">
 
-<footer>
+            <div id="novo" class="novo">
+                🔥 NOVA FOTO
+            </div>
 
-PixWall Studio • Desenvolvido por Henrique Fotografias
+        </section>
 
-</footer>
+        <!-- Miniaturas -->
+        <aside class="colunaDireita">
 
-<script src="mural.js"></script>
+            <div id="miniaturasDireita" class="miniaturas"></div>
+
+        </aside>
+
+    </main>
+
+    <footer>
+
+        PixWall Studio • Desenvolvido por Henrique Fotografias
+
+    </footer>
+
+    <script src="script.js"></script>
 
 </body>
 

@@ -1,33 +1,112 @@
 const fotoPrincipal = document.getElementById("fotoPrincipal");
-const miniaturasEsquerda = document.getElementById("miniaturasEsquerda");
 const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
 
-let ultimaFoto = "";
+let fotos = [];
+let fila = [];
+let exibindo = false;
+let indiceAtual = -1;
+function mostrarFoto(nomeArquivo) {
 
+    const img = new Image();
+
+    img.onload = () => {
+        fotoPrincipal.src = img.src;
+    };
+
+    img.src = "/uploads/" + nomeArquivo + "?t=" + Date.now();
+
+}
+// Carrega as fotos do servidor
 async function carregarFotos() {
 
     try {
 
         const resposta = await fetch("/fotos");
-        const fotos = await resposta.json();
+        let lista = await resposta.json();
 
-        if (!fotos.length) return;
+        if (!Array.isArray(lista)) return;
 
-        fotos.sort();
+        // Ordena da mais antiga para a mais nova
+        lista.sort();
 
-        const fotoAtual = "/uploads/" + fotos[fotos.length - 1];
+        lista.forEach(foto => {
 
-        if (fotoAtual !== ultimaFoto) {
+            if (!fotos.includes(foto)) {
 
-            ultimaFoto = fotoAtual;
+                fotos.push(foto);
 
-            fotoPrincipal.style.opacity = "0";
+                // Só entra na fila depois da primeira inicialização
+                if (indiceAtual >= 0) {
+                    fila.push(foto);
+                }
 
-            setTimeout(() => {
+            }
 
-                fotoPrincipal.src = fotoAtual;
-                fotoPrincipal.style.opacity = "1";
+        });
+
+        atualizarMiniaturas();
+
+        // Primeira foto
+        if (indiceAtual === -1 && fotos.length > 0) {
+
+            indiceAtual = 0;
+            mostrarFoto(fotos[0]);
+
+            iniciarFila();
+
+        }
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar fotos:", erro);
+
+    }
+
+}
+
+// Atualiza miniaturas
+function atualizarMiniaturas() {
+
+    if (!miniaturasDireita) return;
+
+    miniaturasDireita.innerHTML = "";
+
+    [...fotos].reverse().forEach(foto => {
+
+        const img = document.createElement("img");
+
+        img.src = "/uploads/" + foto;
+
+        img.onclick = () => {
+
+            fotoPrincipal.src = img.src;
+
+        };
+
+        miniaturasDireita.appendChild(img);
+
+    });
+
+}
+
+// Exibição automática
+function iniciarFila() {
+
+    if (exibindo) return;
+
+    exibindo = true;
+
+    setInterval(() => {
+
+        // Fotos novas têm prioridade
+        if (fila.length > 0) {
+
+            const foto = fila.shift();
+
+            fotoPrincipal.src = "/uploads/" + foto;
+
+            if (novo) {
 
                 novo.style.display = "block";
 
@@ -37,47 +116,30 @@ async function carregarFotos() {
 
                 }, 3000);
 
-            }, 300);
+            }
+
+            return;
 
         }
 
-        miniaturasEsquerda.innerHTML = "";
-        miniaturasDireita.innerHTML = "";
+        if (fotos.length === 0) return;
 
-        const lista = [...fotos].reverse();
+        indiceAtual++;
 
-        lista.forEach((foto, indice) => {
+        if (indiceAtual >= fotos.length) {
 
-            const img = document.createElement("img");
+            indiceAtual = 0;
 
-            img.src = "/uploads/" + foto;
+        }
 
-            img.onclick = () => {
+        fotoPrincipal.src = "/uploads/" + fotos[indiceAtual];
 
-                fotoPrincipal.src = img.src;
-
-            };
-
-            if (indice % 2 === 0) {
-
-                miniaturasEsquerda.appendChild(img);
-
-            } else {
-
-                miniaturasDireita.appendChild(img);
-
-            }
-
-        });
-
-    } catch (erro) {
-
-        console.log(erro);
-
-    }
+    }, 8000);
 
 }
 
+// Inicialização
 carregarFotos();
 
+// Procura novas fotos
 setInterval(carregarFotos, 2000);
