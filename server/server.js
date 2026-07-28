@@ -108,6 +108,29 @@ app.get("/pendentes", (req, res) => {
     });
 
 });
+app.post("/aprovar", (req, res) => {
+
+    const { foto } = req.body;
+
+    const origem = path.join(__dirname, "pendentes", foto);
+
+    const destino = path.join(__dirname, "uploads", foto);
+
+    fs.rename(origem, destino, (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                sucesso: false
+            });
+        }
+
+        res.json({
+            sucesso: true
+        });
+
+    });
+
+});
 
 app.listen(PORT, () => {
     console.log("Servidor rodando em http://localhost:3000");
