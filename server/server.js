@@ -7,12 +7,32 @@ const fs = require("fs");
 const app = express();
 const PORT = 3000;
 
+// Evento atualmente ativo
+let eventoAtual = {
+    nome: "",
+    modo: "automatico",
+    tempo: 8
+};
+
 const upload = multer({
     storage: multer.memoryStorage()
 });
 
 app.use(express.static(path.join(__dirname, "..")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+
+app.post("/evento", (req, res) => {
+
+    eventoAtual = req.body;
+
+    console.log("Evento atualizado:", eventoAtual);
+
+    res.json({
+        sucesso: true
+    });
+
+});
 
 app.post("/upload", upload.single("foto"), async (req, res) => {
     try {

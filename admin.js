@@ -24,6 +24,18 @@ btnSalvarEvento.addEventListener("click", () => {
     const modo = document.querySelector('input[name="aprovacao"]:checked').value;
 
     const tempo = document.getElementById("tempoEvento").value;
+    
+    fetch("/evento", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        nome,
+        modo,
+        tempo
+    })
+});
 
     eventoNome.textContent = nome || "Evento sem nome";
     eventoModo.textContent = "Modo: " + modo;
