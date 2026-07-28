@@ -2,6 +2,10 @@ const btnCriarEvento = document.getElementById("btnCriarEvento");
 const formEvento = document.getElementById("formEvento");
 
 const btnSalvarEvento = document.getElementById("btnSalvarEvento");
+const btnEditarEvento = document.getElementById("btnEditarEvento");
+const btnEncerrarEvento = document.getElementById("btnEncerrarEvento");
+
+const acoesEvento = document.getElementById("acoesEvento");
 
 const eventoNome = document.getElementById("eventoNome");
 const eventoModo = document.getElementById("eventoModo");
@@ -24,5 +28,23 @@ btnSalvarEvento.addEventListener("click", () => {
     eventoTempo.textContent = "Tempo de exibição: " + tempo + " segundos";
 
     formEvento.style.display = "none";
+
+    btnCriarEvento.style.display = "none";
+    acoesEvento.style.display = "block";
+
+});
+
+btnEncerrarEvento.addEventListener("click", () => {
+
+    eventoNome.textContent = "Nenhum evento ativo";
+    eventoModo.textContent = "";
+    eventoTempo.textContent = "";
+
+    document.getElementById("nomeEvento").value = "";
+    document.getElementById("tempoEvento").value = 8;
+    document.querySelector('input[value="automatico"]').checked = true;
+
+    acoesEvento.style.display = "none";
+    btnCriarEvento.style.display = "block";
 
 });
