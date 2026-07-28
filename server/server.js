@@ -34,14 +34,32 @@ app.post("/evento", (req, res) => {
 
 });
 
+app.get("/evento", (req, res) => {
+
+    res.json(eventoAtual);
+
+});
+
 app.post("/upload", upload.single("foto"), async (req, res) => {
     try {
+
+        console.log("Modo do evento:", eventoAtual.modo);
+
+if (eventoAtual.modo === "manual") {
+    console.log("Foto será enviada para a fila de aprovação.");
+} else {
+    console.log("Foto será enviada diretamente para o mural.");
+}
         if (!req.file) {
             return res.status(400).send("Nenhuma foto enviada.");
         }
 
         const nomeArquivo = Date.now() + ".jpg";
-        const caminho = path.join(__dirname, "uploads", nomeArquivo);
+
+const pastaDestino =
+    eventoAtual.modo === "manual" ? "pendentes" : "uploads";
+
+const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
 
         await sharp(req.file.buffer)
             .rotate()
@@ -56,16 +74,39 @@ app.post("/upload", upload.single("foto"), async (req, res) => {
 });
 
 app.get("/fotos", (req, res) => {
+
     const pasta = path.join(__dirname, "uploads");
 
     fs.readdir(pasta, (err, arquivos) => {
+
         if (err) {
             return res.json([]);
         }
 
         arquivos.sort();
+
         res.json(arquivos);
+
     });
+
+});
+
+app.get("/pendentes", (req, res) => {
+
+    const pasta = path.join(__dirname, "pendentes");
+
+    fs.readdir(pasta, (err, arquivos) => {
+
+        if (err) {
+            return res.json([]);
+        }
+
+        arquivos.sort();
+
+        res.json(arquivos);
+
+    });
+
 });
 
 app.listen(PORT, () => {

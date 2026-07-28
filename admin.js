@@ -24,7 +24,7 @@ btnSalvarEvento.addEventListener("click", () => {
     const modo = document.querySelector('input[name="aprovacao"]:checked').value;
 
     const tempo = document.getElementById("tempoEvento").value;
-    
+
     fetch("/evento", {
     method: "POST",
     headers: {
@@ -84,15 +84,38 @@ btnAbrirMural.addEventListener("click", () => {
     btnPaginaEnvio.addEventListener("click", () => {
     window.open("http://localhost:3000/upload.html", "_blank");
 });
-// ===== TESTE DA FILA DE APROVAÇÃO =====
+// ===== FILA DE APROVAÇÃO =====
 
 const listaPendentes = document.getElementById("listaPendentes");
 
-listaPendentes.innerHTML = `
-    <div class="foto-pendente">
-        <p>📷 Foto de teste</p>
+fetch("/pendentes")
+    .then(res => res.json())
+    .then(fotos => {
 
-        <button>✅ Aprovar</button>
-        <button>❌ Rejeitar</button>
-    </div>
-`;
+        listaPendentes.innerHTML = "";
+
+        if (fotos.length === 0) {
+
+            listaPendentes.innerHTML =
+                "<p>Nenhuma foto aguardando aprovação.</p>";
+
+            return;
+        }
+
+        fotos.forEach(foto => {
+
+            listaPendentes.innerHTML += `
+                <div class="foto-pendente">
+
+                    <p>📷 ${foto}</p>
+
+                    <button>✅ Aprovar</button>
+
+                    <button>❌ Rejeitar</button>
+
+                </div>
+            `;
+
+        });
+
+    });
