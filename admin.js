@@ -10,6 +10,7 @@ const acoesEvento = document.getElementById("acoesEvento");
 const eventoNome = document.getElementById("eventoNome");
 const eventoModo = document.getElementById("eventoModo");
 const eventoTempo = document.getElementById("eventoTempo");
+const btnAbrirMural = document.getElementById("btnAbrirMural");
 
 btnCriarEvento.addEventListener("click", () => {
     formEvento.style.display = "block";
@@ -64,3 +65,6 @@ btnEditarEvento.addEventListener("click", () => {
     formEvento.style.display = "block";
 
 });
+btnAbrirMural.addEventListener("click", () => {
+    window.open("http://localhost:3000/mural.html", "_blank");
+    });
