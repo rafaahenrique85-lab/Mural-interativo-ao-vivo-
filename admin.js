@@ -72,3 +72,15 @@ btnAbrirMural.addEventListener("click", () => {
     btnPaginaEnvio.addEventListener("click", () => {
     window.open("http://localhost:3000/upload.html", "_blank");
 });
+// ===== TESTE DA FILA DE APROVAÇÃO =====
+
+const listaPendentes = document.getElementById("listaPendentes");
+
+listaPendentes.innerHTML = `
+    <div class="foto-pendente">
+        <p>📷 Foto de teste</p>
+
+        <button>✅ Aprovar</button>
+        <button>❌ Rejeitar</button>
+    </div>
+`;
