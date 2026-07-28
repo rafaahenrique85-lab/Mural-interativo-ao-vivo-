@@ -48,3 +48,19 @@ btnEncerrarEvento.addEventListener("click", () => {
     btnCriarEvento.style.display = "block";
 
 });
+btnEditarEvento.addEventListener("click", () => {
+
+    document.getElementById("nomeEvento").value = eventoNome.textContent;
+
+    document.getElementById("tempoEvento").value =
+        parseInt(eventoTempo.textContent);
+
+    if (eventoModo.textContent.includes("manual")) {
+        document.querySelector('input[value="manual"]').checked = true;
+    } else {
+        document.querySelector('input[value="automatico"]').checked = true;
+    }
+
+    formEvento.style.display = "block";
+
+});
