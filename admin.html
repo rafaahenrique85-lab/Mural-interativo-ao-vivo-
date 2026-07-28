@@ -21,11 +21,46 @@
         </div>
 
         <div class="card">
-            <button>➕ Criar Evento</button>
-            <button>🖥️ Abrir Mural</button>
-            <button>📷 Página de Envio</button>
-            <button>⚙️ Configurações</button>
-        </div>
+
+    <button id="btnCriarEvento">➕ Criar Evento</button>
+
+    <div id="formEvento" style="display:none; margin-top:20px;">
+
+        <h3>Novo Evento</h3>
+
+        <input type="text" id="nomeEvento" placeholder="Nome do evento">
+
+        <br><br>
+
+        <label>
+            <input type="radio" name="aprovacao" value="automatico" checked>
+            Automático
+        </label>
+
+        <label style="margin-left:20px;">
+            <input type="radio" name="aprovacao" value="manual">
+            Manual
+        </label>
+
+        <br><br>
+
+        <label>Tempo de exibição</label>
+
+        <br>
+
+        <input type="number" id="tempoEvento" value="8" min="3">
+
+        <br><br>
+
+        <button id="btnSalvarEvento">Salvar Evento</button>
+
+    </div>
+
+    <button>🖥️ Abrir Mural</button>
+    <button>📷 Página de Envio</button>
+    <button>⚙️ Configurações</button>
+
+</div>
 
         <div class="card">
             <h3>Status</h3>
@@ -42,11 +77,12 @@
         </div>
 
         <footer>
-            PixWall © 2026
-        </footer>
+    PixWall © 2026
+</footer>
 
-    </div>
+</div>
+
+<script src="admin.js"></script>
 
 </body>
-
 </html>
