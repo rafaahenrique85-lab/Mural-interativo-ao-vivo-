@@ -2,7 +2,13 @@ const express = require("express");
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+
+require("dotenv").config({
+  path: path.join(__dirname, "..", ".env")
+});
+
 const fs = require("fs");
+const { enviarParaCloudinary } = require("./cloudinary");
 
 const app = express();
 const PORT = 3000;
@@ -62,6 +68,8 @@ const pastaDestino =
 
 const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
 
+console.log("Salvando em:", caminho);
+
         await sharp(req.file.buffer)
             .rotate()
             .jpeg({ quality: 95 })
@@ -109,27 +117,39 @@ app.get("/pendentes", (req, res) => {
     });
 
 });
-app.post("/aprovar", (req, res) => {
+app.post("/aprovar", async (req, res) => {
 
-    const { foto } = req.body;
+    try {
 
-    const origem = path.join(__dirname, "pendentes", foto);
+        const { foto } = req.body;
 
-    const destino = path.join(__dirname, "uploads", foto);
+        const origem = path.join(__dirname, "pendentes", foto);
 
-    fs.rename(origem, destino, (err) => {
+        const destino = path.join(__dirname, "uploads", foto);
+        
+        console.log("Aprovando:", foto);
 
-        if (err) {
-            return res.status(500).json({
-                sucesso: false
-            });
-        }
+console.log("Origem:", origem);
+
+console.log("Destino:", destino);
+
+        await fs.promises.rename(origem, destino);
+
+        await enviarParaCloudinary(destino);
 
         res.json({
             sucesso: true
         });
 
-    });
+    } catch (erro) {
+
+        console.error(erro);
+
+        res.status(500).json({
+            sucesso: false
+        });
+
+    }
 
 });
 
