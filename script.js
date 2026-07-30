@@ -3,6 +3,7 @@ const fotoB = document.getElementById("fotoB");
 const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
 const telaEspera = document.getElementById("telaEspera");
+const btnTelaCheia = document.getElementById("btnTelaCheia");
 
 let fotos = [];
 let fila = [];
@@ -173,3 +174,13 @@ setInterval(() => {
     carregarFotos();
 
 }, 3000);
+
+if (btnTelaCheia) {
+    btnTelaCheia.addEventListener("click", async () => {
+        if (!document.fullscreenElement) {
+            await document.documentElement.requestFullscreen();
+        } else {
+            await document.exitFullscreen();
+        }
+    });
+}
