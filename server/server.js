@@ -64,11 +64,13 @@ const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
 
 
         await sharp(req.file.buffer)
-            .rotate()
-            .jpeg({ quality: 95 })
-            .toFile(caminho);
+    .rotate()
+    .jpeg({ quality: 95 })
+    .toFile(caminho);
 
-        res.send("Foto enviada com sucesso!");
+await enviarParaCloudinary(caminho);
+
+res.send("Foto enviada com sucesso!");
     } catch (erro) {
         console.error(erro);
         res.status(500).send("Erro ao processar a imagem.");
@@ -122,8 +124,6 @@ app.post("/aprovar", async (req, res) => {
         
 
         await fs.promises.rename(origem, destino);
-
-        await enviarParaCloudinary(destino);
 
         res.json({
             sucesso: true
