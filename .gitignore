@@ -1,3 +1,9 @@
 node_modules/
-client_secret*.json
 .env
+
+server/uploads/
+server/pendentes/
+
+.DS_Store
+Thumbs.db
+*.apps.googleusercontent.com.json

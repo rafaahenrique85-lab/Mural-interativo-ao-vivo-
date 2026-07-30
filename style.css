@@ -90,7 +90,7 @@ header{
 
     display:grid;
 
-    grid-template-columns:190px 1fr 220px;
+    grid-template-columns:170px 1fr;
 
     gap:20px;
 
@@ -98,7 +98,9 @@ header{
 
     min-height:0;
 
-}/* ===========================
+}
+
+/* ===========================
         QR CODE
 =========================== */
 
@@ -186,21 +188,55 @@ header{
 
 }
 
-#fotoPrincipal{
+#fotoA,
+#fotoB{
+
+    position:absolute;
+
+    inset:0;
 
     width:100%;
-
     height:100%;
 
     object-fit:contain;
-
     object-position:center;
 
     background:#000;
 
     display:block;
 
-}/* ===========================
+    opacity:1;
+
+    transition:
+        opacity .6s ease,
+        transform 8s ease-out;
+
+} 
+
+.foto-ativa{
+
+    z-index:2;
+
+}
+
+.foto-inativa{
+
+    z-index:1;
+
+}
+
+.fade-out{
+    opacity:0;
+}
+
+.fade-in{
+    opacity:1;
+}
+.zoom{
+    transform: scale(1.08);
+}
+
+/* ===========================
         NOVA FOTO
 =========================== */
 
@@ -233,64 +269,6 @@ header{
 }
 
 /* ===========================
-     COLUNA DIREITA
-=========================== */
-
-.colunaDireita{
-
-    display:flex;
-
-    flex-direction:column;
-
-    min-height:0;
-
-}
-
-/* ===========================
-        MINIATURAS
-=========================== */
-
-.miniaturas{
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-    overflow-y:auto;
-
-    padding-right:4px;
-
-}
-
-.miniaturas img{
-
-    width:100%;
-
-    height:85px;
-
-    object-fit:cover;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    border:2px solid transparent;
-
-    transition:.25s;
-
-}
-
-.miniaturas img:hover{
-
-    transform:scale(1.03);
-
-    border-color:#ffffff55;
-
-}/* ===========================
             RODAPÉ
 =========================== */
 
@@ -313,38 +291,6 @@ footer{
     font-size:14px;
 
     flex-shrink:0;
-
-}
-
-/* ===========================
-      BARRA DE ROLAGEM
-=========================== */
-
-.miniaturas::-webkit-scrollbar{
-
-    width:8px;
-
-}
-
-.miniaturas::-webkit-scrollbar-track{
-
-    background:#1a1a1a;
-
-    border-radius:20px;
-
-}
-
-.miniaturas::-webkit-scrollbar-thumb{
-
-    background:#555;
-
-    border-radius:20px;
-
-}
-
-.miniaturas::-webkit-scrollbar-thumb:hover{
-
-    background:#777;
 
 }
 
@@ -372,21 +318,15 @@ footer{
 
 }
 
-#fotoPrincipal{
-
-    animation:aparecer .35s ease;
-
-}/* ===========================
+/* ===========================
       RESPONSIVIDADE
 =========================== */
 
 @media (max-width:1200px){
 
     .container{
-
-        grid-template-columns:170px 1fr 190px;
-
-    }
+    grid-template-columns:170px 1fr;
+}
 
 }
 

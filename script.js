@@ -1,33 +1,62 @@
-const fotoPrincipal = document.getElementById("fotoPrincipal");
+const fotoA = document.getElementById("fotoA");
+const fotoB = document.getElementById("fotoB");
 const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
 
 let fotos = [];
 let fila = [];
+
 let exibindo = false;
 let indiceAtual = -1;
+
+let fotoAtual = fotoA;
+let fotoOculta = fotoB;
+
 function mostrarFoto(nomeArquivo) {
 
-    const img = new Image();
+    fotoOculta.onload = () => {
 
-    img.onload = () => {
-        fotoPrincipal.src = img.src;
+        fotoOculta.onload = null;
+
+        fotoOculta.style.transform = "scale(1)";
+        fotoOculta.style.opacity = "0";
+
+        requestAnimationFrame(() => {
+
+            fotoOculta.classList.remove("foto-inativa");
+            fotoOculta.classList.add("foto-ativa");
+
+            fotoAtual.classList.remove("foto-ativa");
+            fotoAtual.classList.add("foto-inativa");
+
+            fotoOculta.style.opacity = "1";
+            fotoAtual.style.opacity = "0";
+
+            requestAnimationFrame(() => {
+                fotoOculta.style.transform = "scale(1.08)";
+            });
+
+            const temp = fotoAtual;
+            fotoAtual = fotoOculta;
+            fotoOculta = temp;
+
+        });
+
     };
 
-    img.src = "/uploads/" + nomeArquivo + "?t=" + Date.now();
+    fotoOculta.src = "/uploads/" + nomeArquivo + "?t=" + Date.now();
 
 }
-// Carrega as fotos do servidor
+
 async function carregarFotos() {
 
     try {
 
         const resposta = await fetch("/fotos");
-        let lista = await resposta.json();
+        const lista = await resposta.json();
 
         if (!Array.isArray(lista)) return;
 
-        // Ordena da mais antiga para a mais nova
         lista.sort();
 
         lista.forEach(foto => {
@@ -36,7 +65,6 @@ async function carregarFotos() {
 
                 fotos.push(foto);
 
-                // Só entra na fila depois da primeira inicialização
                 if (indiceAtual >= 0) {
                     fila.push(foto);
                 }
@@ -47,10 +75,10 @@ async function carregarFotos() {
 
         atualizarMiniaturas();
 
-        // Primeira foto
         if (indiceAtual === -1 && fotos.length > 0) {
 
             indiceAtual = 0;
+
             mostrarFoto(fotos[0]);
 
             iniciarFila();
@@ -64,8 +92,6 @@ async function carregarFotos() {
     }
 
 }
-
-// Atualiza miniaturas
 function atualizarMiniaturas() {
 
     if (!miniaturasDireita) return;
@@ -76,11 +102,11 @@ function atualizarMiniaturas() {
 
         const img = document.createElement("img");
 
-        img.src = "/uploads/" + foto;
+        img.src = "/uploads/" + foto + "?t=" + Date.now();
 
         img.onclick = () => {
 
-            fotoPrincipal.src = img.src;
+            mostrarFoto(foto);
 
         };
 
@@ -89,8 +115,6 @@ function atualizarMiniaturas() {
     });
 
 }
-
-// Exibição automática
 function iniciarFila() {
 
     if (exibindo) return;
@@ -104,7 +128,7 @@ function iniciarFila() {
 
             const foto = fila.shift();
 
-            fotoPrincipal.src = "/uploads/" + foto;
+            mostrarFoto(foto);
 
             if (novo) {
 
@@ -132,14 +156,15 @@ function iniciarFila() {
 
         }
 
-        fotoPrincipal.src = "/uploads/" + fotos[indiceAtual];
+        mostrarFoto(fotos[indiceAtual]);
 
     }, 8000);
 
 }
-
-// Inicialização
 carregarFotos();
 
-// Procura novas fotos
-setInterval(carregarFotos, 2000);
+setInterval(() => {
+
+    carregarFotos();
+
+}, 3000);

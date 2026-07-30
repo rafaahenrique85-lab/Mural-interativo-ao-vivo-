@@ -11,7 +11,7 @@ const fs = require("fs");
 const { enviarParaCloudinary } = require("./cloudinary");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Evento atualmente ativo
 let eventoAtual = {
@@ -48,15 +48,9 @@ app.get("/evento", (req, res) => {
 });
 
 app.post("/upload", upload.single("foto"), async (req, res) => {
+
     try {
 
-        console.log("Modo do evento:", eventoAtual.modo);
-
-if (eventoAtual.modo === "manual") {
-    console.log("Foto será enviada para a fila de aprovação.");
-} else {
-    console.log("Foto será enviada diretamente para o mural.");
-}
         if (!req.file) {
             return res.status(400).send("Nenhuma foto enviada.");
         }
@@ -68,7 +62,6 @@ const pastaDestino =
 
 const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
 
-console.log("Salvando em:", caminho);
 
         await sharp(req.file.buffer)
             .rotate()
@@ -127,11 +120,6 @@ app.post("/aprovar", async (req, res) => {
 
         const destino = path.join(__dirname, "uploads", foto);
         
-        console.log("Aprovando:", foto);
-
-console.log("Origem:", origem);
-
-console.log("Destino:", destino);
 
         await fs.promises.rename(origem, destino);
 
@@ -176,5 +164,5 @@ app.post("/rejeitar", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log("Servidor rodando em http://localhost:3000");
+console.log(`Servidor rodando na porta ${PORT}`);
 });
