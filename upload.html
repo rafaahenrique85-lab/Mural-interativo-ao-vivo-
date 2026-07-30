@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,27 +11,46 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h2>Enviar foto para o PixWall</h2>
+        <div class="logo">
+            <h1>PIXWALL</h1>
+        </div>
 
-    <p>Escolha uma foto do seu celular ou computador.</p>
+        <div class="texto">
+            <h2>O melhor do evento é compartilhar</h2>
+        </div>
 
-    <form id="formUpload">
+        <form id="formUpload">
 
-        <input type="file" id="foto" name="foto" required>
+            <input type="file" id="foto" name="foto" accept="image/*" required>
 
-        <button type="submit">
-            Enviar Foto
-        </button>
+            <button type="button" id="btnSelecionar">
+    ENVIAR MINHA FOTO
+</button>
 
-    </form>
+        </form>
 
-    <div class="mensagem" id="mensagem"></div>
+        <div class="progresso">
 
-</div>
+            <progress id="barraProgresso" value="0" max="100"></progress>
 
-<script src="upload.js"></script>
+            <span id="percentual">0%</span>
+
+        </div>
+
+        <div class="mensagem" id="mensagem"></div>
+
+        <div class="termos">
+            Ao enviar sua foto, você concorda com os
+            <strong>Termos de Uso</strong> e a
+            <strong>Política de Privacidade</strong>.
+        </div>
+
+    </div>
+
+    <script src="upload.js"></script>
 
 </body>
+
 </html>
