@@ -407,5 +407,70 @@ footer{
 }
 
 /* ===========================
+      TELA DE ESPERA
+=========================== */
+
+.tela-espera{
+
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    z-index:5;
+
+    text-align:center;
+
+    background:#000;
+
+}
+
+.marca-fundo{
+
+    position:absolute;
+
+    font-size:180px;
+    font-weight:bold;
+    letter-spacing:12px;
+
+    color:#fff;
+
+    opacity:.05;
+
+    user-select:none;
+
+    pointer-events:none;
+
+}
+
+.mensagem-espera{
+
+    position:relative;
+
+    z-index:6;
+
+}
+
+.mensagem-espera h2{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+    font-weight:700;
+
+}
+
+.mensagem-espera p{
+
+    font-size:24px;
+
+    color:#d6d6d6;
+
+}
+/* ===========================
       FIM DO ARQUIVO
 =========================== */

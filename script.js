@@ -2,6 +2,7 @@ const fotoA = document.getElementById("fotoA");
 const fotoB = document.getElementById("fotoB");
 const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
+const telaEspera = document.getElementById("telaEspera");
 
 let fotos = [];
 let fila = [];
@@ -52,10 +53,14 @@ async function carregarFotos() {
 
     try {
 
-        const resposta = await fetch("/fotos");
-        const lista = await resposta.json();
+  const resposta = await fetch("/fotos");
+const lista = await resposta.json();
 
-        if (!Array.isArray(lista)) return;
+if (telaEspera) {
+    telaEspera.style.display = lista.length === 0 ? "flex" : "none";
+}
+
+if (!Array.isArray(lista)) return;
 
         lista.sort();
 
