@@ -154,19 +154,21 @@ function iniciarFila() {
 
             mostrarFoto(foto);
 
-            if (novo) {
+  if (novo) {
 
-                novo.style.display = "block";
+    novo.classList.remove("esconder");
+    novo.classList.add("mostrar");
 
-                setTimeout(() => {
+    setTimeout(() => {
 
-                    novo.style.display = "none";
+        novo.classList.remove("mostrar");
+        novo.classList.add("esconder");
 
-                }, 3000);
+    }, 3000);
 
-            }
+}
 
-            return;
+return;
 
         }
 
