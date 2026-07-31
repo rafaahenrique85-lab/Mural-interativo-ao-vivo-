@@ -17,57 +17,63 @@
 <header>
 
     <div class="logo">
-
         <h1>PIXWALL</h1>
-
     </div>
 
 </header>
 
-    <main class="container">
+<main class="container">
 
- <!-- Foto principal -->
     <section class="mural">
 
-    <div class="qrArea">
+        <!-- Nome do Evento -->
+        <div id="nomeEvento" class="nome-evento"></div>
 
-    <img src="/assets/icons/qrcode.png" id="qrcode" alt="QR Code">
+        <!-- QR Code -->
+        <div class="qrArea">
 
-<p>ESCANEIE O QR CODE E ENVIE SUA FOTO</p>
+            <img src="/assets/icons/qrcode.png" id="qrcode" alt="QR Code">
 
-</div>
+            <p>ESCANEIE O QR CODE E ENVIE SUA FOTO</p>
 
-    <div id="telaEspera" class="tela-espera">
-
-        <div class="marca-fundo">PIXWALL</div>
-
-        <div class="mensagem-espera">
-            <h2>O melhor do evento é compartilhar.</h2>
-            
-<p>ESCANEIE O QR CODE E ENVIE SUA FOTO</p>
         </div>
 
-    </div>
+        <!-- Tela de Espera -->
+        <div id="telaEspera" class="tela-espera">
 
-    <img id="fotoA" class="foto-ativa" src="" alt="Foto A">
+            <div class="marca-fundo">PIXWALL</div>
 
-    <img id="fotoB" class="foto-inativa" src="" alt="Foto B">
+            <div class="mensagem-espera">
 
-    <div id="novo" class="novo">
-        🔥 NOVA FOTO
-    </div>
+                <h2>O melhor do evento é compartilhar.</h2>
 
-</section>
+                <p>ESCANEIE O QR CODE E ENVIE SUA FOTO</p>
 
-    </main>
+            </div>
 
-    <footer>
+        </div>
 
-        PixWall Studio • Desenvolvido por Henrique Fotografias
+        <!-- Fotos -->
+        <img id="fotoA" class="foto-ativa" src="" alt="Foto A">
 
-    </footer>
+        <img id="fotoB" class="foto-inativa" src="" alt="Foto B">
 
-    <button id="btnTelaCheia" class="btn-tela-cheia">
+        <!-- Nova Foto -->
+        <div id="novo" class="novo">
+            🔥 NOVA FOTO
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    PixWall Studio • Desenvolvido por Henrique Fotografias
+
+</footer>
+
+<button id="btnTelaCheia" class="btn-tela-cheia">
     ⛶ Tela Cheia
 </button>
 

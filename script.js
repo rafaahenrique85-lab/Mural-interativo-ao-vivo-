@@ -4,6 +4,7 @@ const miniaturasDireita = document.getElementById("miniaturasDireita");
 const novo = document.getElementById("novo");
 const telaEspera = document.getElementById("telaEspera");
 const btnTelaCheia = document.getElementById("btnTelaCheia");
+const nomeEvento = document.getElementById("nomeEvento");
 
 let fotos = [];
 let fila = [];
@@ -59,6 +60,21 @@ async function carregarConfiguracaoEvento() {
 
         if (evento.tempo) {
             tempoExibicao = Number(evento.tempo);
+        }
+
+        if (nomeEvento) {
+
+            if (evento.nome && evento.nome.trim() !== "") {
+
+                nomeEvento.textContent = evento.nome;
+                nomeEvento.style.display = "block";
+
+            } else {
+
+                nomeEvento.style.display = "none";
+
+            }
+
         }
 
     } catch (erro) {
@@ -194,11 +210,12 @@ return;
 
     carregarFotos();
 
-    setInterval(() => {
+   setInterval(() => {
 
-        carregarFotos();
+    carregarFotos();
+    carregarConfiguracaoEvento();
 
-    }, 3000);
+}, 3000);
 
 })();
 

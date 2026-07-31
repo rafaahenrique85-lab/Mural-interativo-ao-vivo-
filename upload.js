@@ -5,11 +5,6 @@ const percentual = document.getElementById("percentual");
 const mensagem = document.getElementById("mensagem");
 
 const foto = document.getElementById("foto");
-const botao = document.getElementById("btnSelecionar");
-
-botao.addEventListener("click", () => {
-    foto.click();
-});
 
 foto.addEventListener("change", () => {
     if (foto.files.length > 0) {
@@ -52,26 +47,30 @@ formulario.addEventListener("submit", (e) => {
 
     xhr.onload = () => {
 
-    barra.value = 100;
-    percentual.textContent = "100%";
+        barra.value = 100;
+        percentual.textContent = "100%";
 
-    mensagem.style.display = "block";
-    mensagem.textContent = xhr.responseText;
+        mensagem.style.display = "block";
 
-    formulario.reset();
+  mensagem.innerHTML = `
+    <strong>Foto enviada com sucesso!</strong><br>
+    Ela aparecerá no mural em instantes.
+`;
 
-    setTimeout(() => {
+        formulario.reset();
 
-        progresso.style.display = "none";
-        barra.value = 0;
-        percentual.textContent = "0%";
+        setTimeout(() => {
 
-        mensagem.style.display = "none";
-        mensagem.textContent = "";
+            progresso.style.display = "none";
+            barra.value = 0;
+            percentual.textContent = "0%";
 
-    }, 2500);
+            mensagem.style.display = "none";
+            mensagem.innerHTML = "";
 
-};
+        }, 3500);
+
+    };
 
     xhr.open("POST", "/upload");
     xhr.send(dados);

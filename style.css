@@ -536,6 +536,43 @@ footer{
 .novo.esconder{
     animation:sairNovaFoto .35s ease forwards;
 }
+
+/* ===========================
+      NOME DO EVENTO
+=========================== */
+
+.nome-evento {
+
+    position: absolute;
+
+    top: 25px;
+    right: 25px;
+
+    padding: 12px 22px;
+
+    background: rgba(0,0,0,.45);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: 30px;
+
+    color: #fff;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+
+}
 /* ===========================
       FIM DO ARQUIVO
 =========================== */

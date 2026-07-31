@@ -73,7 +73,8 @@ p {
 }
 
 input[type="file"] {
-    display: none;
+    position: absolute;
+    left: -9999px;
 }
 
 button {

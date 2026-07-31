@@ -23,20 +23,22 @@
 
         <form id="formUpload">
 
-            <input type="file" id="foto" name="foto" accept="image/*" required>
+            <input
+                type="file"
+                id="foto"
+                name="foto"
+                accept="image/*"
+                required>
 
-            <button type="button" id="btnSelecionar">
-    ENVIAR MINHA FOTO
-</button>
+            <label for="foto" class="botaoSelecionar">
+                ENVIAR MINHA FOTO
+            </label>
 
         </form>
 
         <div class="progresso">
-
             <progress id="barraProgresso" value="0" max="100"></progress>
-
             <span id="percentual">0%</span>
-
         </div>
 
         <div class="mensagem" id="mensagem"></div>
