@@ -6,7 +6,6 @@ const btnEditarEvento = document.getElementById("btnEditarEvento");
 const btnEncerrarEvento = document.getElementById("btnEncerrarEvento");
 
 const acoesEvento = document.getElementById("acoesEvento");
-
 const eventoNome = document.getElementById("eventoNome");
 const eventoModo = document.getElementById("eventoModo");
 const eventoTempo = document.getElementById("eventoTempo");
@@ -81,6 +80,7 @@ btnEditarEvento.addEventListener("click", () => {
 btnAbrirMural.addEventListener("click", () => {
     window.open("http://localhost:3000/mural.html", "_blank");
     });
+    
     btnPaginaEnvio.addEventListener("click", () => {
     window.open("http://localhost:3000/upload.html", "_blank");
 });

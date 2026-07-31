@@ -10,9 +10,9 @@ let fila = [];
 
 let exibindo = false;
 let indiceAtual = -1;
-
 let fotoAtual = fotoA;
 let fotoOculta = fotoB;
+let tempoExibicao = 8;
 
 function mostrarFoto(nomeArquivo) {
 
@@ -47,6 +47,25 @@ function mostrarFoto(nomeArquivo) {
     };
 
     fotoOculta.src = "/uploads/" + nomeArquivo + "?t=" + Date.now();
+
+}
+
+async function carregarConfiguracaoEvento() {
+
+    try {
+
+        const resposta = await fetch("/evento");
+        const evento = await resposta.json();
+
+        if (evento.tempo) {
+            tempoExibicao = Number(evento.tempo);
+        }
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar configuração do evento:", erro);
+
+    }
 
 }
 
@@ -129,7 +148,6 @@ function iniciarFila() {
 
     setInterval(() => {
 
-        // Fotos novas têm prioridade
         if (fila.length > 0) {
 
             const foto = fila.shift();
@@ -164,16 +182,23 @@ function iniciarFila() {
 
         mostrarFoto(fotos[indiceAtual]);
 
-    }, 8000);
+    }, tempoExibicao * 1000);
 
 }
-carregarFotos();
 
-setInterval(() => {
+(async () => {
+
+    await carregarConfiguracaoEvento();
 
     carregarFotos();
 
-}, 3000);
+    setInterval(() => {
+
+        carregarFotos();
+
+    }, 3000);
+
+})();
 
 if (btnTelaCheia) {
     btnTelaCheia.addEventListener("click", async () => {
