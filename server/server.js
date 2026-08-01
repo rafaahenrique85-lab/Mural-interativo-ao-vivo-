@@ -9,6 +9,7 @@ require("dotenv").config({
 });
 
 const fs = require("fs");
+const caminhoEvento = path.join(__dirname, "evento.json");
 const {
     enviarParaCloudinary,
     listarFotosCloudinary
@@ -23,6 +24,22 @@ let eventoAtual = {
     modo: "automatico",
     tempo: 8
 };
+
+if (fs.existsSync(caminhoEvento)) {
+
+    try {
+
+        eventoAtual = JSON.parse(
+            fs.readFileSync(caminhoEvento, "utf8")
+        );
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar evento:", erro);
+
+    }
+
+}
 
 const fotosRecebidas = new Set();
 
@@ -39,6 +56,11 @@ app.post("/evento", (req, res) => {
 
     eventoAtual = req.body;
 
+    fs.writeFileSync(
+        caminhoEvento,
+        JSON.stringify(eventoAtual, null, 2)
+    );
+
     console.log("Evento atualizado:", eventoAtual);
 
     res.json({
@@ -50,6 +72,57 @@ app.post("/evento", (req, res) => {
 app.get("/evento", (req, res) => {
 
     res.json(eventoAtual);
+
+});
+
+app.post("/encerrar-evento", async (req, res) => {
+
+    try {
+
+        // Apaga o arquivo do evento
+
+        if (fs.existsSync(caminhoEvento)) {
+            fs.unlinkSync(caminhoEvento);
+        }
+
+        // Limpa uploads
+        const uploads = path.join(__dirname, "uploads");
+
+        if (fs.existsSync(uploads)) {
+
+            fs.readdirSync(uploads).forEach(arquivo => {
+                fs.unlinkSync(path.join(uploads, arquivo));
+            });
+
+        }
+
+        // Limpa pendentes
+        const pendentes = path.join(__dirname, "pendentes");
+
+        if (fs.existsSync(pendentes)) {
+
+            fs.readdirSync(pendentes).forEach(arquivo => {
+                fs.unlinkSync(path.join(pendentes, arquivo));
+            });
+
+        }
+
+        // Reinicia o evento
+        eventoAtual = {
+            nome: "",
+            modo: "automatico",
+            tempo: 8
+        };
+
+        res.json({ sucesso: true });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        res.status(500).json({ sucesso: false });
+
+    }
 
 });
 

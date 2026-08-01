@@ -61,20 +61,33 @@ btnEncerrarEvento.addEventListener("click", () => {
     btnCriarEvento.style.display = "block";
 
 });
-btnEditarEvento.addEventListener("click", () => {
+btnEncerrarEvento.addEventListener("click", () => {
 
-    document.getElementById("nomeEvento").value = eventoNome.textContent;
-
-    document.getElementById("tempoEvento").value =
-        parseInt(eventoTempo.textContent);
-
-    if (eventoModo.textContent.includes("manual")) {
-        document.querySelector('input[value="manual"]').checked = true;
-    } else {
-        document.querySelector('input[value="automatico"]').checked = true;
+    if (!confirm("Tem certeza que deseja encerrar o evento?")) {
+        return;
     }
 
-    formEvento.style.display = "block";
+    fetch("/encerrar-evento", {
+        method: "POST"
+    })
+    
+    .then(res => res.json())
+    .then(() => {
+
+        eventoNome.textContent = "Nenhum evento ativo";
+        eventoModo.textContent = "";
+        eventoTempo.textContent = "";
+
+        document.getElementById("nomeEvento").value = "";
+        document.getElementById("tempoEvento").value = 8;
+        document.querySelector('input[value="automatico"]').checked = true;
+
+        acoesEvento.style.display = "none";
+        btnCriarEvento.style.display = "block";
+
+        alert("Evento encerrado com sucesso!");
+
+    });
 
 });
 btnAbrirMural.addEventListener("click", () => {
@@ -170,3 +183,25 @@ function rejeitarFoto(foto) {
     });
 
 }
+
+fetch("/evento")
+    .then(res => res.json())
+    .then(evento => {
+
+        if (!evento.nome) return;
+
+        eventoNome.textContent = evento.nome;
+        eventoModo.textContent = "Modo: " + evento.modo;
+        eventoTempo.textContent = "Tempo de exibição: " + evento.tempo + " segundos";
+
+        document.getElementById("nomeEvento").value = evento.nome;
+        document.getElementById("tempoEvento").value = evento.tempo;
+
+        document.querySelector(
+            input[value="${evento.modo}"]
+        ).checked = true;
+
+        btnCriarEvento.style.display = "none";
+        acoesEvento.style.display = "block";
+
+    });
