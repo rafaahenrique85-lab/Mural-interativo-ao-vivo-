@@ -14,6 +14,7 @@ let indiceAtual = -1;
 let fotoAtual = fotoA;
 let fotoOculta = fotoB;
 let tempoExibicao = 8;
+let conectado = true;
 
 function mostrarFoto(nomeArquivo) {
 
@@ -89,14 +90,22 @@ async function carregarFotos() {
 
     try {
 
-  const resposta = await fetch("/fotos");
-const lista = await resposta.json();
+        const resposta = await fetch("/fotos");
+        const lista = await resposta.json();
 
-if (telaEspera) {
-    telaEspera.style.display = lista.length === 0 ? "flex" : "none";
-}
+        if (!conectado) {
 
-if (!Array.isArray(lista)) return;
+            conectado = true;
+
+            console.log("🟢 Conexão restabelecida");
+
+        }
+
+        if (telaEspera) {
+            telaEspera.style.display = lista.length === 0 ? "flex" : "none";
+        }
+
+        if (!Array.isArray(lista)) return;
 
         lista.sort();
 
@@ -128,7 +137,13 @@ if (!Array.isArray(lista)) return;
 
     } catch (erro) {
 
-        console.error("Erro ao carregar fotos:", erro);
+        if (conectado) {
+
+            conectado = false;
+
+            console.log("🔴 Servidor indisponível. Tentando reconectar...");
+
+        }
 
     }
 
