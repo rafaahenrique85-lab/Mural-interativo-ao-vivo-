@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+const crypto = require("crypto");
 
 require("dotenv").config({
   path: path.join(__dirname, "..", ".env")
@@ -19,6 +20,8 @@ let eventoAtual = {
     modo: "automatico",
     tempo: 8
 };
+
+const fotosRecebidas = new Set();
 
 const upload = multer({
     storage: multer.memoryStorage()
@@ -54,6 +57,20 @@ app.post("/upload", upload.single("foto"), async (req, res) => {
         if (!req.file) {
             return res.status(400).send("Nenhuma foto enviada.");
         }
+
+        const hash = crypto
+    .createHash("sha256")
+    .update(req.file.buffer)
+    .digest("hex");
+
+if (fotosRecebidas.has(hash)) {
+    console.log("❌ FOTO REPETIDA BLOQUEADA");
+    return res.status(409).send("Esta foto já foi enviada anteriormente.");
+}
+
+console.log("✅ FOTO NOVA");
+
+fotosRecebidas.add(hash);
 
         const nomeArquivo = Date.now() + ".jpg";
 

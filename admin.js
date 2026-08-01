@@ -88,43 +88,56 @@ btnAbrirMural.addEventListener("click", () => {
 
 const listaPendentes = document.getElementById("listaPendentes");
 
-fetch("/pendentes")
-    .then(res => res.json())
-    .then(fotos => {
+function carregarPendentes() {
 
-        listaPendentes.innerHTML = "";
+    fetch("/pendentes")
+        .then(res => res.json())
+        .then(fotos => {
 
-        if (fotos.length === 0) {
+            listaPendentes.innerHTML = "";
 
-            listaPendentes.innerHTML =
-                "<p>Nenhuma foto aguardando aprovação.</p>";
+            if (fotos.length === 0) {
 
-            return;
-        }
+                listaPendentes.innerHTML =
+                    "<p>Nenhuma foto aguardando aprovação.</p>";
 
-        fotos.forEach(foto => {
+                return;
+            }
 
-            listaPendentes.innerHTML += `
-                <div class="foto-pendente">
-                
-<img
-    src="/pendentes/${foto}"
-    alt="Foto pendente"
-    class="miniatura-pendente"
->
+            fotos.forEach((foto, indice) => {
 
-<p>${foto}</p>
+                listaPendentes.innerHTML += `
+                    <div class="foto-pendente">
 
-<button onclick="aprovarFoto('${foto}')">✅ Aprovar</button>
+                        <h4>Fila ${indice + 1}</h4>
 
-<button onclick="rejeitarFoto('${foto}')">❌ Rejeitar</button>
+                        <img
+                            src="/pendentes/${foto}?t=${Date.now()}"
+                            class="miniatura-pendente"
+                        >
 
-                </div>
-            `;
+                        <p>${foto}</p>
+
+                        <button onclick="aprovarFoto('${foto}')">
+                            ✅ Aprovar
+                        </button>
+
+                        <button onclick="rejeitarFoto('${foto}')">
+                            ❌ Rejeitar
+                        </button>
+
+                    </div>
+                `;
+
+            });
 
         });
 
-    });
+}
+
+carregarPendentes();
+
+setInterval(carregarPendentes, 3000);
 
 function aprovarFoto(foto) {
 

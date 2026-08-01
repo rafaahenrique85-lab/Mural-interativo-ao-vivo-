@@ -545,8 +545,8 @@ footer{
 
     position: absolute;
 
-    top: 25px;
     right: 25px;
+    bottom: 25px;
 
     padding: 12px 22px;
 
