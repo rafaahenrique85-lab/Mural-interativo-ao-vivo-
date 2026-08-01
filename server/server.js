@@ -85,9 +85,40 @@ const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
     .jpeg({ quality: 95 })
     .toFile(caminho);
 
-await enviarParaCloudinary(caminho);
+const resultadoCloudinary = await enviarParaCloudinary(caminho);
+
+// Só registra no banco se a foto foi aprovada automaticamente
+if (eventoAtual.modo === "automatico") {
+
+    const caminhoBanco = path.join(__dirname, "fotos.json");
+
+    let fotos = [];
+
+    if (fs.existsSync(caminhoBanco)) {
+
+    const conteudo = fs.readFileSync(caminhoBanco, "utf8").trim();
+
+    if (conteudo) {
+        fotos = JSON.parse(conteudo);
+    }
+
+}
+
+    fotos.push({
+        nome: nomeArquivo,
+        url: resultadoCloudinary.secure_url,
+        data: new Date().toISOString()
+    });
+
+    fs.writeFileSync(
+        caminhoBanco,
+        JSON.stringify(fotos, null, 2)
+    );
+
+}
 
 res.send("Foto enviada com sucesso!");
+
     } catch (erro) {
         console.error(erro);
         res.status(500).send("Erro ao processar a imagem.");
