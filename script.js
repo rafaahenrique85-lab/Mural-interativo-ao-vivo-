@@ -16,7 +16,7 @@ let fotoOculta = fotoB;
 let tempoExibicao = 8;
 let conectado = true;
 
-function mostrarFoto(nomeArquivo) {
+function mostrarFoto(foto) {
 
     fotoOculta.onload = () => {
 
@@ -48,7 +48,7 @@ function mostrarFoto(nomeArquivo) {
 
     };
 
-    fotoOculta.src = "/uploads/" + nomeArquivo + "?t=" + Date.now();
+    fotoOculta.src = foto.url;
 
 }
 
@@ -107,21 +107,21 @@ async function carregarFotos() {
 
         if (!Array.isArray(lista)) return;
 
-        lista.sort();
+  lista.sort((a, b) => new Date(a.data) - new Date(b.data));
 
-        lista.forEach(foto => {
+lista.forEach(foto => {
 
-            if (!fotos.includes(foto)) {
+    if (!fotos.some(f => f.nome === foto.nome)) {
 
-                fotos.push(foto);
+        fotos.push(foto);
 
-                if (indiceAtual >= 0) {
-                    fila.push(foto);
-                }
+        if (indiceAtual >= 0) {
+            fila.push(foto);
+        }
 
-            }
+    }
 
-        });
+});
 
         atualizarMiniaturas();
 
@@ -158,7 +158,7 @@ function atualizarMiniaturas() {
 
         const img = document.createElement("img");
 
-        img.src = "/uploads/" + foto + "?t=" + Date.now();
+        img.src = foto.url;
 
         img.onclick = () => {
 

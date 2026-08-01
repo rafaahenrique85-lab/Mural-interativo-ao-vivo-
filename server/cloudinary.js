@@ -18,6 +18,25 @@ async function enviarParaCloudinary(caminhoArquivo) {
 
 }
 
+async function listarFotosCloudinary() {
+
+    const resultado = await cloudinary.search
+        .expression("folder:PixWall")
+        .sort_by("created_at", "asc")
+        .max_results(500)
+        .execute();
+
+    return resultado.resources.map(foto => ({
+
+        nome: foto.filename + "." + foto.format,
+        url: foto.secure_url,
+        data: foto.created_at
+
+    }));
+
+}
+
 module.exports = {
-    enviarParaCloudinary
+    enviarParaCloudinary,
+    listarFotosCloudinary
 };

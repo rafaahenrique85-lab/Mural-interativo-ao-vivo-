@@ -9,7 +9,10 @@ require("dotenv").config({
 });
 
 const fs = require("fs");
-const { enviarParaCloudinary } = require("./cloudinary");
+const {
+    enviarParaCloudinary,
+    listarFotosCloudinary
+} = require("./cloudinary");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -79,41 +82,15 @@ const pastaDestino =
 
 const caminho = path.join(__dirname, pastaDestino, nomeArquivo);
 
-
-        await sharp(req.file.buffer)
+await sharp(req.file.buffer)
     .rotate()
     .jpeg({ quality: 95 })
     .toFile(caminho);
 
-const resultadoCloudinary = await enviarParaCloudinary(caminho);
-
-// Só registra no banco se a foto foi aprovada automaticamente
+// Somente no modo automático envia para o Cloudinary
 if (eventoAtual.modo === "automatico") {
 
-    const caminhoBanco = path.join(__dirname, "fotos.json");
-
-    let fotos = [];
-
-    if (fs.existsSync(caminhoBanco)) {
-
-    const conteudo = fs.readFileSync(caminhoBanco, "utf8").trim();
-
-    if (conteudo) {
-        fotos = JSON.parse(conteudo);
-    }
-
-}
-
-    fotos.push({
-        nome: nomeArquivo,
-        url: resultadoCloudinary.secure_url,
-        data: new Date().toISOString()
-    });
-
-    fs.writeFileSync(
-        caminhoBanco,
-        JSON.stringify(fotos, null, 2)
-    );
+    await enviarParaCloudinary(caminho);
 
 }
 
@@ -125,21 +102,21 @@ res.send("Foto enviada com sucesso!");
     }
 });
 
-app.get("/fotos", (req, res) => {
+app.get("/fotos", async (req, res) => {
 
-    const pasta = path.join(__dirname, "uploads");
+    try {
 
-    fs.readdir(pasta, (err, arquivos) => {
+        const fotos = await listarFotosCloudinary();
 
-        if (err) {
-            return res.json([]);
-        }
+        res.json(fotos);
 
-        arquivos.sort();
+    } catch (erro) {
 
-        res.json(arquivos);
+        console.error("Erro ao listar fotos do Cloudinary:", erro);
 
-    });
+        res.json([]);
+
+    }
 
 });
 
@@ -160,6 +137,7 @@ app.get("/pendentes", (req, res) => {
     });
 
 });
+
 app.post("/aprovar", async (req, res) => {
 
     try {
@@ -171,11 +149,14 @@ app.post("/aprovar", async (req, res) => {
         const destino = path.join(__dirname, "uploads", foto);
         
 
-        await fs.promises.rename(origem, destino);
+       await fs.promises.rename(origem, destino);
 
-        res.json({
-            sucesso: true
-        });
+// Envia a foto aprovada para o Cloudinary
+await enviarParaCloudinary(destino);
+
+res.json({
+    sucesso: true
+});
 
     } catch (erro) {
 
