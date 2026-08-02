@@ -160,14 +160,21 @@ await sharp(req.file.buffer)
     .jpeg({ quality: 95 })
     .toFile(caminho);
 
-// Somente no modo automático envia para o Cloudinary
+// Responde imediatamente ao usuário
+res.send("Foto enviada com sucesso!");
+
+// Faz o backup em segundo plano
 if (eventoAtual.modo === "automatico") {
 
-    await enviarParaCloudinary(caminho);
+    enviarParaCloudinary(caminho)
+        .then(() => {
+            console.log("☁️ Backup realizado no Cloudinary");
+        })
+        .catch((erro) => {
+            console.error("Erro ao enviar para o Cloudinary:", erro);
+        });
 
 }
-
-res.send("Foto enviada com sucesso!");
 
     } catch (erro) {
         console.error(erro);
@@ -175,21 +182,28 @@ res.send("Foto enviada com sucesso!");
     }
 });
 
-app.get("/fotos", async (req, res) => {
+app.get("/fotos", (req, res) => {
 
-    try {
+    const pasta = path.join(__dirname, "uploads");
 
-        const fotos = await listarFotosCloudinary();
+    fs.readdir(pasta, (err, arquivos) => {
+
+        if (err) {
+            return res.json([]);
+        }
+
+        const fotos = arquivos
+            .filter(arquivo => arquivo.endsWith(".jpg"))
+            .sort()
+            .map(arquivo => ({
+                nome: arquivo,
+                url: "/uploads/" + arquivo,
+                data: arquivo.replace(".jpg", "")
+            }));
 
         res.json(fotos);
 
-    } catch (erro) {
-
-        console.error("Erro ao listar fotos do Cloudinary:", erro);
-
-        res.json([]);
-
-    }
+    });
 
 });
 

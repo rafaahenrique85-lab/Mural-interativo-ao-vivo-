@@ -25,16 +25,16 @@ btnSalvarEvento.addEventListener("click", () => {
     const tempo = document.getElementById("tempoEvento").value;
 
     fetch("/evento", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        nome,
-        modo,
-        tempo
-    })
-});
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nome,
+            modo,
+            tempo
+        })
+    });
 
     eventoNome.textContent = nome || "Evento sem nome";
     eventoModo.textContent = "Modo: " + modo;
@@ -47,20 +47,23 @@ btnSalvarEvento.addEventListener("click", () => {
 
 });
 
-btnEncerrarEvento.addEventListener("click", () => {
+btnEditarEvento.addEventListener("click", () => {
 
-    eventoNome.textContent = "Nenhum evento ativo";
-    eventoModo.textContent = "";
-    eventoTempo.textContent = "";
+    document.getElementById("nomeEvento").value = eventoNome.textContent;
 
-    document.getElementById("nomeEvento").value = "";
-    document.getElementById("tempoEvento").value = 8;
-    document.querySelector('input[value="automatico"]').checked = true;
+    document.getElementById("tempoEvento").value =
+        parseInt(eventoTempo.textContent);
 
-    acoesEvento.style.display = "none";
-    btnCriarEvento.style.display = "block";
+    if (eventoModo.textContent.includes("manual")) {
+        document.querySelector('input[value="manual"]').checked = true;
+    } else {
+        document.querySelector('input[value="automatico"]').checked = true;
+    }
+
+    formEvento.style.display = "block";
 
 });
+
 btnEncerrarEvento.addEventListener("click", () => {
 
     if (!confirm("Tem certeza que deseja encerrar o evento?")) {
@@ -70,7 +73,6 @@ btnEncerrarEvento.addEventListener("click", () => {
     fetch("/encerrar-evento", {
         method: "POST"
     })
-    
     .then(res => res.json())
     .then(() => {
 
@@ -90,6 +92,7 @@ btnEncerrarEvento.addEventListener("click", () => {
     });
 
 });
+
 btnAbrirMural.addEventListener("click", () => {
     window.open("http://localhost:3000/mural.html", "_blank");
     });
@@ -197,9 +200,8 @@ fetch("/evento")
         document.getElementById("nomeEvento").value = evento.nome;
         document.getElementById("tempoEvento").value = evento.tempo;
 
-        document.querySelector(
-            input[value="${evento.modo}"]
-        ).checked = true;
+document.querySelector('input[value="' + 
+    evento.modo + '"]').checked = true;
 
         btnCriarEvento.style.display = "none";
         acoesEvento.style.display = "block";
